@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Jeu de devinette</title>
+</head>
+<body>
+  <h1>Jeu de devinette</h1>
+  <p>Devinez le nombre entre 1 et 100 :</p>
+  <input type="number" id="guessInput">
+  <button onclick="checkGuess()">Devinez</button>
+  <p id="resultMessage"></p>
+  <p>Tentatives: <span id="attemptCount">0</span></p>
+
+  <script>
+    // Génération d'un nombre aléatoire entre 1 et 100
+    var randomNumber = Math.floor(Math.random() * 100) + 1;
+    var attemptCount = 0;
+
+    function checkGuess() {
+      var guessInput = document.getElementById("guessInput");
+      var guess = parseInt(guessInput.value);
+      var resultMessage = document.getElementById("resultMessage");
+      var attemptCountElement = document.getElementById("attemptCount");
+
+      if (isNaN(guess)) {
+        resultMessage.textContent = "Veuillez entrer un nombre valide.";
+      } else if (guess < 1 || guess > 100) {
+        resultMessage.textContent = "Veuillez entrer un nombre entre 1 et 100.";
+      } else {
+        attemptCount++;
+        attemptCountElement.textContent = attemptCount;
+
+        if (guess === randomNumber) {
+          resultMessage.textContent = "Félicitations! Vous avez deviné le nombre.";
+          guessInput.disabled = true;
+        } else if (guess < randomNumber) {
+          resultMessage.textContent = "Le nombre est trop bas. Essayez à nouveau.";
+        } else {
+          resultMessage.textContent = "Le nombre est trop élevé. Essayez à nouveau.";
+        }
+      }
+
+      guessInput.value = "";
+      guessInput.focus();
+    }
+  </script>
+</body>
+</html>
